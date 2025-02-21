@@ -1,0 +1,127 @@
+using System;
+using System.Text.RegularExpressions;
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Выберите операцию:");
+        Console.WriteLine("1. Проверка email-адреса");
+        Console.WriteLine("2. Проверка номера телефона");
+        Console.WriteLine("3. Поиск всех дат в формате dd.MM.yyyy");
+        Console.WriteLine("4. Замена всех цифр в тексте на *");
+        Console.WriteLine("5. Разбиение строки по запятым, точкам или пробелам");
+        Console.WriteLine("0. Выход");
+
+        while (true)
+        {
+            Console.Write("Ваш выбор: ");
+            var choice = Console.ReadKey().KeyChar.ToString();
+            Console.WriteLine();
+
+            switch (choice)
+            {
+                case "1":
+                    CheckEmail();
+                    break;
+                case "2":
+                    CheckPhoneNumber();
+                    break;
+                case "3":
+                    FindDates();
+                    break;
+                case "4":
+                    ReplaceDigitsWithAsterisk();
+                    break;
+                case "5":
+                    SplitByCommasDotsOrSpaces();
+                    break;
+                case "0":
+                    return;
+                default:
+                    Console.WriteLine("Неправильный ввод. Попробуйте снова.");
+                    break;
+            }
+        }
+    }
+
+    private static void CheckEmail()
+    {
+        Console.Write("Введите email-адрес: ");
+        var email = Console.ReadLine();
+
+        var regex = new Regex(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
+        if (regex.IsMatch(email))
+        {
+            Console.WriteLine($"Email '{email}' корректный.");
+        }
+        else
+        {
+            Console.WriteLine($"Email '{email}' некорректный.");
+        }
+    }
+
+    private static void CheckPhoneNumber()
+    {
+        Console.Write("Введите номер телефона: ");
+        var phoneNumber = Console.ReadLine();
+
+        var regex = new Regex(@"\+?\d{10,15}");
+        if (regex.IsMatch(phoneNumber))
+        {
+            Console.WriteLine($"Номер телефона '{phoneNumber}' корректный.");
+        }
+        else
+        {
+            Console.WriteLine($"Номер телефона '{phoneNumber}' некорректный.");
+        }
+    }
+
+    private static void FindDates()
+    {
+        Console.Write("Введите текст для поиска дат: ");
+        var text = Console.ReadLine();
+
+        var regex = new Regex(@"\b\d{2}\.\d{2}\.\d{4}\b");
+        var matches = regex.Matches(text);
+
+        if (matches.Count > 0)
+        {
+            Console.WriteLine("Найденные даты:");
+            foreach (var match in matches)
+            {
+                Console.WriteLine(match);
+            }
+        }
+        else
+        {
+            Console.WriteLine("Даты не найдены.");
+        }
+    }
+
+    private static void ReplaceDigitsWithAsterisk()
+    {
+        Console.Write("Введите текст для замены цифр на '*': ");
+        var text = Console.ReadLine();
+
+        var regex = new Regex(@"\d");
+        var result = regex.Replace(text, "*");
+
+        Console.WriteLine($"Результат замены: {result}");
+    }
+
+    private static void SplitByCommasDotsOrSpaces()
+    {
+        Console.Write("Введите строку для разбиения: ");
+        var str = Console.ReadLine();
+
+        var regex = new Regex(@"[,.;\s]");
+        var parts = regex.Split(str);
+
+        Console.WriteLine("Полученные части строки:");
+        foreach (var part in parts)
+        {
+            Console.WriteLine(part);
+        }
+    }
+}
