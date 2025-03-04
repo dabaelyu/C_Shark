@@ -1,0 +1,171 @@
+/// <summary>
+/// 1 zadanie
+/// </summary>
+static void main1() 
+{
+    CheckLogin();
+}
+private static void CheckLogin()
+{
+    Console.Write("Введите логин: ");
+    var login = Console.ReadLine();
+
+    var regex = new Regex(@"^[a-zA-Z][a-zA-Z0-9]{1,9}$");
+    if (regex.IsMatch(login))
+    {
+        Console.WriteLine($"логин '{login}' корректный.");
+    }
+    else
+    {
+        Console.WriteLine($"логин '{login}' некорректный.");
+    }
+}
+
+/// <summary>
+/// 3 zadanie
+/// </summary>
+static void main3() 
+{
+    Car c1 = new Car("dfdf", 3333);
+
+    c1.DisplayInfo();
+    c1.Drive(33);
+    c1.DisplayInfo();
+    c1 = null;
+}
+public class Car 
+{
+    string brand;
+    int year;
+    int probek;
+    public Car(string _brand, int _year) 
+    {
+        brand = _brand;
+        year = _year;
+        probek = 0;
+    }
+    public void Drive(int km)
+    {
+        probek += km;
+    }
+    public void DisplayInfo() 
+    {
+        Console.Write("бренд: " + brand + "\n" +
+                      "год выпуска: " + year + "\n" +
+                      "пробег: " + probek + "\n");
+    }
+    
+}
+
+/// <summary>
+/// 4 zadanie
+/// </summary>
+static void main4() 
+{
+    Student s1 = new Student("Sanya", 18, 4);
+    s1.DisplayInfo();
+    s1.SetGrade(5);
+    s1.DisplayInfo();
+}
+public class Student
+{
+    private string name;
+    private int age;
+    private int grade;
+
+    public Student(string _name, int _age, int _Grade)
+    {
+        name = _name;
+        age = _age;
+        SetGrade(_Grade);
+    }
+
+    public void SetGrade(int value)
+    {
+        if (value < 1 || value > 5)
+        {
+            Console.WriteLine("Оценка должна быть в пределах от 1 до 5.");
+        }
+        else
+        {
+            grade = value;
+        }
+    }
+
+    public void DisplayInfo()
+    {
+        Console.WriteLine($"Имя: {name}");
+        Console.WriteLine($"Возраст: {age}");
+        Console.WriteLine($"Успеваемость: {grade}");
+    }
+}
+
+/// <summary>
+/// 5 zadanie
+/// </summary>
+static void main() 
+{
+    DateTime startTime = DateTime.Now;
+
+    int goodCount = 0;
+
+    for (int i = 1; i <= 1000; i++)
+    {
+        if (IsGoodNumber(i))
+        {
+            goodCount++;
+        }
+    }
+
+    DateTime endTime = DateTime.Now;
+
+    Console.WriteLine("Количество 'хороших' чисел:" + goodCount);
+    Console.WriteLine($"Время выполнения: " + (endTime - startTime) + "секунд");
+
+    static bool IsGoodNumber(int number)
+    {
+        int sumOfDigits = GetSumOfDigits(number);
+        return number % sumOfDigits == 0;
+    }
+
+    static int GetSumOfDigits(int number)
+    {
+        int sum = 0;
+        while (number > 0)
+        {
+            sum += number % 10;
+            number /= 10;
+        }
+        return sum;
+    }
+}
+
+/// <summary>
+/// 6 zadanie
+/// </summary>
+static void main6() 
+{
+    int number = 345534;
+    int count1 = CountNumber(number);
+    Console.WriteLine(count1);
+}
+static int CountNumber(int number)
+{
+    if (number < 0)
+    {
+        number = -number;
+    }
+
+    if (number == 0)
+    {
+        return 1;
+    }
+
+    int count = 0;
+    while (number > 0)
+    {
+        count++;
+        number /= 10;
+    }
+    return count;
+}
